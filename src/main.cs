@@ -33,14 +33,14 @@ class Program
                     continue;
                 }
 
-                long totalSize = 0;
+                long dirSize = 0;
 
                 try
                 {
                     // Gets the file size and adds it to the collection.
                     IEnumerable<FileInfo> files = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories);
-                    totalSize = files.Sum(file => file.Length);
-                    dirCollection[input] = totalSize;
+                    dirSize = files.Sum(file => file.Length);
+                    dirCollection[input] = dirSize;
                     dirCount++;
                 }
                 catch (Exception err)
@@ -51,17 +51,38 @@ class Program
         }
 
         Dictionary<string, long>.KeyCollection directories = dirCollection.Keys;
+        const int KILOBYTE = 1000;
+        const int MEGABYTE = 1000000;
+        const int GIGABYTE = 1000000000;
 
-        //Procceses the sizes to convert them to MG or GB if possible.
+        // Procceses the sizes to convert them to a readable format.
         Dictionary<string, string> results = new();
+        long totalSize = 0; // The size of the collecions.
+        string totalResult; // The end result that will be displayed.
 
         foreach (string dir in directories)
         {
-            // Constants for byte conversion.
-            const int KILOBYTE = 1000;
-            const int MEGABYTE = 1000000;
-            const int GIGABYTE = 1000000000;
+            totalSize += dirCollection[dir];
+        }
+        if (totalSize >= KILOBYTE && totalSize < MEGABYTE) // KB
+        {
+            totalResult = Convert.ToString(totalSize / KILOBYTE) + " KB";
+        }
+        else if (totalSize >= MEGABYTE && totalSize < GIGABYTE) // MB
+        {
+            totalResult = Convert.ToString(totalSize / MEGABYTE) + " MB";
+        }
+        else if (totalSize >= GIGABYTE) // GB
+        {
+            totalResult = Convert.ToString(totalSize / GIGABYTE) + " GB";
+        }
+        else // Bytes
+        {
+            totalResult = Convert.ToString(totalSize) + " bytes";
+        }
 
+        foreach (string dir in directories)
+        {
             long size = dirCollection[dir];
             
             if (size >= KILOBYTE && size < MEGABYTE) // KB
@@ -78,11 +99,11 @@ class Program
             }
             else // Byte
             {
-                results[dir] = Convert.ToString(size) + " Bytes";
+                results[dir] = Convert.ToString(size) + " bytes";
             }
         }
 
-        Console.WriteLine("\nResults\n---------------------------"); //Creates a line break.
+        Console.WriteLine("\nResults\n---------------------------"); // A line break.
 
         // Displays the size of the directories.
         Dictionary<string, string>.KeyCollection resultKeys = results.Keys;
@@ -91,5 +112,7 @@ class Program
         {
             Console.WriteLine($"{dir}: {results[dir]}");
         }
+
+        Console.WriteLine($"\nTotal: {totalResult}");
     }
 }

@@ -50,5 +50,15 @@ class Program
             }
         }
 
+        Console.WriteLine("\nResults\n---------------------------"); //Creates a line break.
+
+        // Displays the size of the directories.
+        Dictionary<string, long>.KeyCollection directories = dirCollection.Keys;
+
+        foreach (string dir in directories)
+        {
+            string size = Convert.ToString(dirCollection[dir]);
+            Console.WriteLine($"{dir}: {size}");
+        }
     }
 }

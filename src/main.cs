@@ -127,5 +127,8 @@ class Program
         }
 
         Console.WriteLine($"\nTotal: {totalResult}");
+
+        // Prevents the app from closing right away.
+        Console.ReadLine();
     }
 }

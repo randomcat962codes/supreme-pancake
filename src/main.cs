@@ -7,11 +7,12 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("Enter the directories you want to be searched. Enter \"end\" when you are finished.");
+        Console.WriteLine("Enter the directories or files you want to be searched. Enter \"end\" when you are finished.");
 
         bool getDirs = true;
         int dirCount = 0; // Iterator
-        Dictionary<string, long> dirCollection = new(); // Contains the directories with their respoctive sizes.
+        Dictionary<string, long> dirCollection = new(); // Contains the directories/files with their respective sizes.
+        
         while (getDirs)
         {
             Console.Write(Convert.ToString(dirCount + 1) + ": ");
@@ -24,28 +25,39 @@ class Program
             } 
             else
             {
-                DirectoryInfo dirInfo = new(input);
-
-                // Makes sure the listed directory exists.
-                if (!dirInfo.Exists) 
-                {
-                    Console.WriteLine("The directory could not be found.");
-                    continue;
-                }
-
-                long dirSize = 0;
+                long itemSize = 0;
 
                 try
                 {
-                    // Gets the file size and adds it to the collection.
-                    IEnumerable<FileInfo> files = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories);
-                    dirSize = files.Sum(file => file.Length);
-                    dirCollection[input] = dirSize;
-                    dirCount++;
+                    // Check if input is a file
+                    if (File.Exists(input))
+                    {
+                        FileInfo fileInfo = new(input);
+                        itemSize = fileInfo.Length;
+                        dirCollection[input] = itemSize;
+                        dirCount++;
+                        Console.WriteLine($"\t*File added: {Path.GetFileName(input)}");
+                    }
+                    // Check if input is a directory
+                    else if (Directory.Exists(input))
+                    {
+                        DirectoryInfo dirInfo = new(input);
+                        
+                        // Gets the file size and adds it to the collection.
+                        IEnumerable<FileInfo> files = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories);
+                        itemSize = files.Sum(file => file.Length);
+                        dirCollection[input] = itemSize;
+                        dirCount++;
+                        Console.WriteLine($"\t*Directory added: {dirInfo.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\t*The file or directory could not be found.");
+                    }
                 }
                 catch (Exception err)
                 {
-                    Console.WriteLine($"\t*There was trouble searching the directory. The error will be listed below:\n{err.Message}");
+                    Console.WriteLine($"\t*There was trouble accessing the path. The error will be listed below:\n{err.Message}");
                 }
             }
         }
@@ -55,15 +67,16 @@ class Program
         const int MEGABYTE = 1000000;
         const int GIGABYTE = 1000000000;
 
-        // Procceses the sizes to convert them to a readable format.
+        // Processes the sizes to convert them to a readable format.
         Dictionary<string, string> results = new();
-        long totalSize = 0; // The size of the collecions.
+        long totalSize = 0; // The size of the collections.
         string totalResult; // The end result that will be displayed.
 
         foreach (string dir in directories)
         {
             totalSize += dirCollection[dir];
         }
+        
         if (totalSize >= KILOBYTE && totalSize < MEGABYTE) // KB
         {
             totalResult = Convert.ToString(totalSize / KILOBYTE) + " KB";
@@ -105,7 +118,7 @@ class Program
 
         Console.WriteLine("\nResults\n---------------------------"); // A line break.
 
-        // Displays the size of the directories.
+        // Displays the size of the directories/files.
         Dictionary<string, string>.KeyCollection resultKeys = results.Keys;
 
         foreach (string dir in resultKeys)

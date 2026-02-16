@@ -5,7 +5,11 @@ You give the app directories or files you want it to look at on your computer an
 ## Installation
 Currently all users will need to download the source code and compile it themselves with the .NET SDK Ver. 10.
 
+
+## Contributions
 Contributions of any kind are welcome!
 And thank you to all who chose to contribute.
+
+---
 
 This softare is under the Apache License.

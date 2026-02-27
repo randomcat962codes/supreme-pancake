@@ -17,6 +17,12 @@
                 Placeholder="Enter directories here"
                 AutoSize="TextChanges"  />
 
+            <Button
+                Content="Compile"
+                Height="40"
+                Width="120"
+                Click="CompileData"    />
+
         </VerticalStackLayout>
     </ScrollView>
 

@@ -2,5 +2,8 @@
 
 public partial class MainPage : ContentPage
 {
-	Console.WriteLine("Hello, World!");
+	public MainPage()
+	{
+		InitializeComponent();
+	}
 }

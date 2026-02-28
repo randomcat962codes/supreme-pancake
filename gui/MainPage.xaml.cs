@@ -5,25 +5,6 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-
-		// Sets up the export grid
-		var dataTable = new Grid
-		{
-			ColumnDefinitions = 
-			{ 
-				new ColumnDefinition(GridLength.Star), 
-				new ColumnDefinition(120) 
-			},
-			RowDefinitions = 
-			{
-				new RowDefinition { Height = GridLength.Auto } // Header row
-			},
-			Padding = new Thickness(10),
-			BackgroundColor = Colors.Gray
-		};
-
-		dataTable.Add(new Label { Text = "FILE PATH", FontAttributes = FontAttributes.Bold }, 0, 0);
-		dataTable.Add(new Label { Text = "SIZE", FontAttributes = FontAttributes.Bold }, 1, 0);
 	}
 
 	// Convert bytes to another readable format (gb, mb, etc.)
@@ -109,6 +90,25 @@ public partial class MainPage : ContentPage
 		int currentRow = 1;
 		string[] pathCollection = fileSizes.Keys.ToArray(); // Gets the keys from the fileSizes dictionary to be iterated over
 
+		// Sets up the export grid
+		var dataTable = new Grid
+		{
+			ColumnDefinitions = 
+			{ 
+				new ColumnDefinition(GridLength.Star), 
+				new ColumnDefinition(120) 
+			},
+			RowDefinitions = 
+			{
+				new RowDefinition { Height = GridLength.Auto } // Header row
+			},
+			Padding = new Thickness(10),
+			BackgroundColor = Colors.Gray
+		};
+
+		dataTable.Add(new Label { Text = "FILE PATH", FontAttributes = FontAttributes.Bold }, 0, 0);
+		dataTable.Add(new Label { Text = "SIZE", FontAttributes = FontAttributes.Bold }, 1, 0);
+
 		foreach (string path in pathCollection)
 		{
 			string size = fileSizes[path];
@@ -120,8 +120,8 @@ public partial class MainPage : ContentPage
 			var pathLabel = new Label { Text = path };
 			var sizeLabel = new Label { Text = size };
 
-			myTableGrid.Add(pathLabel, 0, currentRow);
-    		myTableGrid.Add(sizeLabel, 1, currentRow);
+			dataTable.Add(pathLabel, 0, currentRow);
+    		dataTable.Add(sizeLabel, 1, currentRow);
 
 			currentRow++;
 		}

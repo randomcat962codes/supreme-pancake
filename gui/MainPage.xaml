@@ -24,13 +24,6 @@
 
         </VerticalStackLayout>
 
-        <!-- Will contain the compiled data, inserted through MainPage.xaml.cs  -->
-        <VerticleStackLayout
-            x:Name = "CompiledDataLocation"
-            Padding="30,0"
-            Spacing="25">
-        </VerticleStackLayout>
-
     </ScrollView>
 
 </ContentPage>

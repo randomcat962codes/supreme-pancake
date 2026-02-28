@@ -7,59 +7,59 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void CompileData(object sender, RoutedEventArgs e)
+	// Convert bytes to another readable format (gb, mb, etc.)
+	private string BytesToReadable(long bytes)
+	{
+		const int KILOBYTE = 1000;
+		const int MEGABYTE = 1000000;
+		const int GIGABYTE = 1000000000;
+
+		string result = "";
+
+		if (bytes >= KILOBYTE && bytes < MEGABYTE) // Kilobyte
+		{
+			result = Convert.ToString(bytes/KILOBYTE) + " KB";
+		}
+		else if (bytes >= MEGABYTE && bytes < GIGABYTE) // Megabyte
+		{
+			result = Convert.ToString(bytes/MEGABYTE) + " MB";
+		}
+		else if (bytes >= GIGABYTE) // Gigabyte
+		{
+			result = Convert.ToString(bytes/GIGABYTE) + " GB";
+		}
+		else // Bytes
+		{
+			result = Convert.ToString(bytes) + " Bytes";
+		}
+
+		return result;
+	}
+
+	private void CompileData(object? sender, EventArgs e)
 	{
 		// Gets the directory/file paths
 		string editorContent = DirectoryInputText.Text;
 		string[] paths = editorContent.Split(
 			new string[] {"\r\n", "\n"},
-			StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+			StringSplitOptions.RemoveEmptyEntries
 		);
 
-		Dictionary<string, string> output = new();
-		long totalBytes = 0; 
+		Dictionary<string, string> fileSizes = new Dictionary<string, string>(){};
+		long totalBytes = 0L; 
 
-		// A helper to convert the bytes to another readable format (gb, mb, etc.)
-		private string BytesToReadable(int bytes)
-		{
-			const int KILOBYTE = 1000;
-			const int MEGABYTE = 1000000;
-			const int GIGABYTE = 1000000000;
-
-			string result = "";
-
-			if (bytes >= KILOBYTE && bytes < MEGABYTE) // Kilobyte
-			{
-				result = Convert.ToString(bytes/KILOBYTE) + " KB";
-			}
-			else if (bytes >= MEGABYTE && bytes < GIGABYTE) // Megabyte
-			{
-				result = Convert.ToString(bytes/MEGABYTE) + " MB";
-			}
-			else if (bytes >= GIGABYTE) // Gigabyte
-			{
-				result = Convert.ToString(bytes/GIGABYTE) + " GB";
-			}
-			else // Bytes
-			{
-				result = Convert.ToString(bytes) + " Bytes";
-			}
-
-			return result;
-		}
-
-		foreach (string directory in directories)
+		foreach (string directory in paths)
 		{
 			// Check if input is a file
 			if (File.Exists(directory))
 			{
 				FileInfo fileInfo = new(directory);
-				fileBytes = fileInfo.Length;
+				long fileBytes = fileInfo.Length;
 
 				totalBytes += fileBytes;
 				
 				string fileSize = BytesToReadable(fileBytes);
-				output[directory] = fileSize;
+				fileSizes[directory] = fileSize;
 			}
 			// Check if input is a directory
 			else if (Directory.Exists(directory))
@@ -68,16 +68,16 @@ public partial class MainPage : ContentPage
 				
 				// Gets the file size and adds it to the collection.
 				IEnumerable<FileInfo> files = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories);
-				directoryBytes = files.Sum(file => file.Length);
+				long directoryBytes = files.Sum(file => file.Length);
 
 				totalBytes += directoryBytes;
 
-				string directorySize = BytesToReadable(totalBytes);
-				output[directory] = directorySize();
+				string directorySize = BytesToReadable(directoryBytes);
+				fileSizes[directory] = directorySize;
 			}
 			else
 			{
-				output[directory] = "There was an error compiling this directory/file";
+				fileSizes[directory] = "There was an error compiling this directory/file";
 			}
 		}
 	}

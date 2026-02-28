@@ -18,10 +18,8 @@
                 AutoSize="TextChanges"  />
 
             <Button
-                Content="Compile"
-                Height="40"
-                Width="120"
-                Click="CompileData"    />
+                Text="Compile"
+                Clicked="CompileData"    />
 
         </VerticalStackLayout>
     </ScrollView>

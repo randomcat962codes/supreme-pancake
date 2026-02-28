@@ -4,6 +4,8 @@
              x:Class="gui.MainPage">
 
     <ScrollView>
+
+        <!-- Contains the base input layout for entering directories -->
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
@@ -12,17 +14,23 @@
                 FontSize="25"
                 TextColor="Black"   />
 
-            <Editor
-                x:Name="DirectoryInputText"
+            <Editor x:Name="DirectoryInputText"
                 Placeholder="Enter directories here"
                 AutoSize="TextChanges"  />
 
-            <Button
-                Text="Compile"
+            <Button Text="Compile"
                 Clicked="CompileData"
                 BackgroundColor="Gray"    />
 
         </VerticalStackLayout>
+
+        <!-- Will contain the compiled data, inserted through MainPage.xaml.cs  -->
+        <VerticleStackLayout
+            x:Name = "CompiledDataLocation"
+            Padding="30,0"
+            Spacing="25">
+        </VerticleStackLayout>
+
     </ScrollView>
 
 </ContentPage>

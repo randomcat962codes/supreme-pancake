@@ -19,7 +19,8 @@
 
             <Button
                 Text="Compile"
-                Clicked="CompileData"    />
+                Clicked="CompileData"
+                BackgroundColor="Gray"    />
 
         </VerticalStackLayout>
     </ScrollView>

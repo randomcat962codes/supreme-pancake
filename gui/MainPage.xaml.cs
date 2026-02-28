@@ -45,6 +45,8 @@ public partial class MainPage : ContentPage
 			StringSplitOptions.RemoveEmptyEntries
 		);
 
+		DirectoryInputText.Text = "";
+
 		Dictionary<string, string> fileSizes = new Dictionary<string, string>(){};
 		long totalBytes = 0L; 
 

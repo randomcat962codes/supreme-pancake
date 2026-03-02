@@ -46,6 +46,11 @@ public partial class MainPage : ContentPage
 			StringSplitOptions.RemoveEmptyEntries
 		);
 
+		foreach (string path in paths)
+		{
+			debugMain.Text += $"\"{path}\"";
+		}
+
 		DirectoryInputText.Text = "";
 
 		Dictionary<string, string> fileSizes = new Dictionary<string, string>(){};
@@ -125,5 +130,7 @@ public partial class MainPage : ContentPage
 
 			currentRow++;
 		}
+
+		StackLayout.Children.Add(dataTable);
 	}
 }

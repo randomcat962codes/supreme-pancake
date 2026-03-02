@@ -7,8 +7,15 @@
 
         <!-- Contains the base input layout for entering directories -->
         <VerticalStackLayout
+            x:Name="StackLayout"
             Padding="30,0"
             Spacing="25">
+
+            <!-- Debugging -->
+            <Label Text=""
+                    FontSize="25"
+                    TextColor="Red"
+                    x:Name="debugMain"/>
 
             <Label Text="Enter each directory/file you want searched into the text below. Make sure each directory/file is speratated by a new line."
                 FontSize="25"

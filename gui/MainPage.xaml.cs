@@ -42,14 +42,9 @@ public partial class MainPage : ContentPage
 		// Gets the directory/file paths
 		string editorContent = DirectoryInputText.Text;
 		string[] paths = editorContent.Split(
-			new string[] {"\r\n", "\n"},
+			new char[] {'\r', '\n'},
 			StringSplitOptions.RemoveEmptyEntries
 		);
-
-		foreach (string path in paths)
-		{
-			debugMain.Text += $"\"{path}\"";
-		}
 
 		DirectoryInputText.Text = "";
 
@@ -130,6 +125,15 @@ public partial class MainPage : ContentPage
 
 			currentRow++;
 		}
+
+		//Adds the calculated total
+		dataTable.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+		var totalLabel = new Label { Text = "Total" };
+		var totalSizeLabel = new Label { Text = formattedTotal };
+		// Current row does not need to be updated because the last 
+		// path run still incriments the currentRow variable
+		dataTable.Add(totalLabel, 0, currentRow);
+		dataTable.Add(totalSizeLabel, 1, currentRow);
 
 		StackLayout.Children.Add(dataTable);
 	}

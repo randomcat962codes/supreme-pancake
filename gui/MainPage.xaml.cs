@@ -7,31 +7,42 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-	// Convert bytes to another readable format (gb, mb, etc.)
+	// Convert bytes to another readable format (gb, mb, etc.).
 	private string BytesToReadable(long bytes)
 	{
 		const int KILOBYTE = 1000;
 		const int MEGABYTE = 1000000;
 		const int GIGABYTE = 1000000000;
 
-		string result = "";
+		string result;
+
+		// These have base values to avoid compiler errors. 
+		// They will not be used, though.
+		string affix = ""; // Wil be KB, MG, GB, or Bytes
+		float bytesAsFloat = bytes;
+		float simplifiedUnit = 0;
 
 		if (bytes >= KILOBYTE && bytes < MEGABYTE) // Kilobyte
 		{
-			result = Convert.ToString(bytes/KILOBYTE) + " KB";
+			affix = " KB";
+			simplifiedUnit = (float)Math.Round(bytesAsFloat/KILOBYTE, 2);
 		}
 		else if (bytes >= MEGABYTE && bytes < GIGABYTE) // Megabyte
 		{
-			result = Convert.ToString(bytes/MEGABYTE) + " MB";
+			affix = " MB";
+			simplifiedUnit = (float)Math.Round(bytesAsFloat/MEGABYTE, 2);
 		}
 		else if (bytes >= GIGABYTE) // Gigabyte
 		{
-			result = Convert.ToString(bytes/GIGABYTE) + " GB";
+			affix = " GB";
+			simplifiedUnit = (float)Math.Round(bytesAsFloat/GIGABYTE, 2);
 		}
-		else // Bytes
+		else // Bytes | An early ending will be needed.
 		{
-			result = Convert.ToString(bytes) + " Bytes";
+			return Convert.ToString(bytes) + " Bytes";
 		}
+
+		result = Convert.ToString(simplifiedUnit) + affix;
 
 		return result;
 	}

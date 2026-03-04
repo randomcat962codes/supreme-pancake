@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace gui;
+namespace supremePancake;
 
 public static class MauiProgram
 {

@@ -1,4 +1,4 @@
-﻿namespace gui;
+﻿namespace supremePancake;
 
 public partial class MainPage : ContentPage
 {

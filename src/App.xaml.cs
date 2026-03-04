@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace gui;
+namespace supremePancake;
 
 public partial class App : Application
 {

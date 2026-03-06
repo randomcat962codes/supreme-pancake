@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace gui;
+namespace supremePancake;
 
 public class Program
 {

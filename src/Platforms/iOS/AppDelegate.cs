@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace gui;
+namespace supremePancake;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

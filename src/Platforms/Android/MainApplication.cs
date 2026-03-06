@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace gui;
+namespace supremePancake;
 
 [Application]
 public class MainApplication : MauiApplication

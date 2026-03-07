@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="supremePancake.MainPage">
+
+    <ScrollView>
+
+        <!-- Contains the base input layout for entering directories -->
+        <VerticalStackLayout
+            x:Name="StackLayout"
+            Padding="30,0"
+            Spacing="25">
+
+            <!-- Debugging -->
+            <Label Text=""
+                    FontSize="25"
+                    TextColor="Red"
+                    x:Name="debugMain"/>
+
+            <Label Text="Enter each directory/file you want searched into the text below. Make sure each directory/file is speratated by a new line."
+                FontSize="25"
+                TextColor="Black"   />
+
+            <Editor x:Name="DirectoryInputText"
+                Placeholder="Enter directories here"
+                AutoSize="TextChanges"  />
+
+            <Button Text="Compile"
+                Clicked="CompileData"
+                BackgroundColor="Gray"    />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

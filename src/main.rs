@@ -1,18 +1,18 @@
 use std::env;
-use std::fs;
+use filesize::PathExt;
 use std::collections::HashMap;
 use std::path::Path;
 
-fn get_file_size(file: &Path) -> i64 {
-    0 // Temprorary value until implementation
+fn get_file_size(file: &Path) -> Result<u64, &str> {
+    let size = file.size_on_disk();
 }
 
-fn get_dir_size(file: &Path) -> i64 {
-    0 // Temprorary value until implementation
+fn get_dir_size(file: &Path) -> Result<u64, &str> {
+    
 }
 
 fn main() {
-    let mut file_compilations: HashMap<&str, i64> = HashMap::new();
+    let mut file_compilations: HashMap<&str, &str> = HashMap::new();
     let dirs_and_files: Vec<String> = env::args().collect();
 
     for p in dirs_and_files {
@@ -23,7 +23,7 @@ fn main() {
             panic!("The path {} does not exist!", p);
         }
 
-        let mut content_size: i64;
+        let mut content_size: Result<u64, &str>;
 
         if content.is_file() {
             content_size = get_file_size(content);
@@ -31,6 +31,6 @@ fn main() {
             content_size = get_dir_size(content);
         }
 
-        
+
     }
 }
